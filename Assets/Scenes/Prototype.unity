@@ -187,7 +187,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88280520}
-  m_LocalRotation: {x: 0.12993279, y: 1.2093192e-15, z: -6.1606406e-16, w: 0.99152285}
+  m_LocalRotation: {x: 0.12993278, y: -0.00000003303755, z: 0.0000000043293613, w: 0.99152285}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -959,7 +959,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.11187601, y: -0.0000000052783307, z: 3.682096e-10, w: 0.9937222}
+  m_LocalRotation: {x: 0.11187601, y: 0.0000000052783378, z: -3.6826092e-10, w: 0.9937222}
   m_LocalPosition: {x: 0, y: 5.7, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1196,6 +1196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1244177035}
   - component: {fileID: 1244177036}
+  - component: {fileID: 1244177037}
   m_Layer: 0
   m_Name: GodSword
   m_TagString: GodSword
@@ -1231,6 +1232,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 3.5, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1244177037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244177034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ae40fc0c2a237439aa8db2455a09b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 722324110}
+  trainingDollRenderer: {fileID: 1288712923}
+  trainingDollMaterial: {fileID: 2100000, guid: 613198d017ac2ae4ebab9f63858ad91b,
+    type: 2}
+  hitFeedbackMaterial: {fileID: 2100000, guid: a2d9854fe036743419ad129ac3ba8a80, type: 2}
+  isStopped: 0
+  stopTimeDuration: 0.15
+  slowTimeDuration: 0.15
 --- !u!1 &1288712921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,10 +1265,9 @@ GameObject:
   - component: {fileID: 1288712923}
   - component: {fileID: 1288712922}
   - component: {fileID: 1288712926}
-  - component: {fileID: 1288712927}
   m_Layer: 0
   m_Name: Training Doll
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1342,24 +1362,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
---- !u!114 &1288712927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288712921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eddcde96d4c39e64084851a019732dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerController: {fileID: 722324110}
-  trainingDollMaterial: {fileID: 2100000, guid: 613198d017ac2ae4ebab9f63858ad91b,
-    type: 2}
-  hitFeedbackMaterial: {fileID: 2100000, guid: a2d9854fe036743419ad129ac3ba8a80, type: 2}
-  trainingDollRenderer: {fileID: 1288712923}
+  m_CollisionDetection: 1
 --- !u!1 &1335331101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1590,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445760314}
-  m_LocalRotation: {x: 0.111875996, y: -0.0000000042745896, z: 4.812451e-10, w: 0.9937222}
+  m_LocalRotation: {x: 0.111875996, y: 0.0000000042745913, z: -4.812453e-10, w: 0.9937222}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
