@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    enum MovementState {Idle, Moving, Dashing, Jumping};
-    MovementState CurrentMovementState = MovementState.Idle;
+    public enum MovementState {Idle, Moving, Dashing, Jumping};
+    public MovementState CurrentMovementState = MovementState.Idle;
 
     public enum AttackState {NotAttacking, ReadyingAttack, AttackReady, ReleaseAttack, Parry};
     public AttackState CurrentAttackState = AttackState.NotAttacking;
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private Vector3 moveDirection;
     private float dashCooldownTimer = 0, dashStackAmount = 0;
     private float rotationVelocity;
-    private float swingingSpeedMultiplier = 1; //this is the speed of the character when readying the attack or jump attacking
+    private float swingingSpeedMultiplier = 1, gravity = -9.8f, velocityY; //this is the speed of the character when readying the attack or jump attacking
 
     [SerializeField]
     private CharacterController playerController = null;
@@ -37,10 +37,10 @@ public class Player : MonoBehaviour
     private MeshRenderer swordRenderer = null;
 
     [SerializeField]
-    private Material releaseAttackMaterial = null;
+    private Material releaseAttackMaterial = null, swordMaterial = null;
 
     [SerializeField]
-    private float speed = 1, dashSpeed = 1, dashDuration = 1, dashStackMax = 1, dashCooldown = 1, rotationTime = 0;
+    private float speed = 1, dashSpeed = 1, dashDuration = 1, dashStackMax = 1, dashCooldown = 1, rotationTime = 0, jumpHeight = 0, jumpGravityScale = 1, fallGravityScale = 1;
 
 
     private void Awake()
@@ -122,6 +122,15 @@ public class Player : MonoBehaviour
                     break;
             }
         };
+
+        input.Player.Jump.performed += context =>
+        {
+            if (playerController.isGrounded && CurrentAttackState == AttackState.AttackReady)
+            {
+                swordRenderer.material = swordMaterial;
+                PlayerAnimator.Play("JumpImpulse", 0);
+            }
+        };
     }
 
     private void OnEnable()
@@ -160,7 +169,12 @@ public class Player : MonoBehaviour
             }            
             
             moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            playerController.Move(moveDirection.normalized * speed * swingingSpeedMultiplier * Time.deltaTime);
+
+            playerController.Move(((moveDirection.normalized * speed * swingingSpeedMultiplier) + new Vector3(0, velocityY, 0)) * Time.deltaTime);            
+        }
+        else
+        {
+            playerController.Move(new Vector3(0, velocityY, 0) * Time.deltaTime);
         }
     }
 
@@ -196,9 +210,28 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    void FixedUpdate()
+    private void CustomGravity()
     {
+        if (playerController.velocity.y > 0)
+        {
+            velocityY += gravity * jumpGravityScale * Time.deltaTime;
+        }
+        else if (playerController.velocity.y < 0)
+        {
+            velocityY += gravity * fallGravityScale * Time.deltaTime;
+        }
+    }
+
+    public void Jump()
+    {
+        velocityY = Mathf.Sqrt(jumpHeight * -2f * (gravity * jumpGravityScale));
+    }
+
+
+    void Update()
+    {
+        CustomGravity();
+
         RestoreDashStack();
 
         Movement();

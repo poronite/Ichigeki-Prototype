@@ -23,4 +23,12 @@ public class AttackReady : MonoBehaviour
         PlayerController.CurrentAttackState = Player.AttackState.NotAttacking;
         swordRenderer.material = swordMaterial;
     }
+
+    public void JumpImpulse()
+    {
+        PlayerController.CurrentAttackState = Player.AttackState.AttackReady;
+        PlayerController.CurrentMovementState = Player.MovementState.Jumping;
+        swordRenderer.material = attackReadyMaterial;
+        PlayerController.Jump();
+    }
 }
