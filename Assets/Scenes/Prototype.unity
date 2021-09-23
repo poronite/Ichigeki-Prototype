@@ -433,7 +433,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700747369}
-  m_LocalRotation: {x: 0.09383001, y: 0.000000017130471, z: -0.0000000016144748, w: 0.99558824}
+  m_LocalRotation: {x: 0.09383001, y: -0.000000017130471, z: 0.0000000016144748, w: 0.99558824}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentMovementState: 0
   CurrentAttackState: 0
-  playerController: {fileID: 722324112}
+  PlayerController: {fileID: 722324112}
   CameraController: {fileID: 1526643278}
   Camera: {fileID: 963194228}
   PlayerAnimator: {fileID: 1335331103}
@@ -964,7 +964,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.11187601, y: 0.0000000052783378, z: -3.6826092e-10, w: 0.9937222}
+  m_LocalRotation: {x: 0.11187601, y: -0.000000005278337, z: 3.6826037e-10, w: 0.9937222}
   m_LocalPosition: {x: 0, y: 5.7, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1595,7 +1595,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445760314}
-  m_LocalRotation: {x: 0.111875996, y: 0.0000000042745913, z: -4.812453e-10, w: 0.9937222}
+  m_LocalRotation: {x: 0.111875996, y: -0.0000000042745896, z: 4.812451e-10, w: 0.9937222}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1683,7 +1683,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_MaxSpeed: 150
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: 

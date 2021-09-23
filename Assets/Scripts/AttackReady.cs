@@ -22,6 +22,10 @@ public class AttackReady : MonoBehaviour
     {
         PlayerController.CurrentAttackState = Player.AttackState.NotAttacking;
         swordRenderer.material = swordMaterial;
+        if (!PlayerController.PlayerController.isGrounded)
+        {
+            PlayerController.PlayerAnimator.Play("AirborneReleaseAttack");
+        }
     }
 
     public void JumpImpulse()

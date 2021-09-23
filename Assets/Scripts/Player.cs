@@ -21,8 +21,7 @@ public class Player : MonoBehaviour
     private float rotationVelocity;
     private float swingingSpeedMultiplier = 1, gravity = -9.8f, velocityY; //this is the speed of the character when readying the attack or jump attacking
 
-    [SerializeField]
-    private CharacterController playerController = null;
+    public CharacterController PlayerController = null;
 
     [SerializeField]
     private CinemachineFreeLook CameraController = null;
@@ -30,8 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform Camera = null;
 
-    [SerializeField]
-    private Animator PlayerAnimator = null;
+    public Animator PlayerAnimator = null;
 
     [SerializeField]
     private MeshRenderer swordRenderer = null;
@@ -56,7 +54,7 @@ public class Player : MonoBehaviour
         input.Player.Look.performed += context =>
         {
             Vector2 look = context.ReadValue<Vector2>();
-            CameraController.m_XAxis.m_InputAxisValue = look.x;
+            CameraController.m_XAxis.m_InputAxisValue = -look.x;
             CameraController.m_YAxis.m_InputAxisValue = -look.y;
         };
 
@@ -125,7 +123,7 @@ public class Player : MonoBehaviour
 
         input.Player.Jump.performed += context =>
         {
-            if (playerController.isGrounded && CurrentAttackState == AttackState.AttackReady)
+            if (PlayerController.isGrounded && CurrentAttackState == AttackState.AttackReady)
             {
                 swordRenderer.material = swordMaterial;
                 PlayerAnimator.Play("JumpImpulse", 0);
@@ -141,6 +139,16 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         input.Player.Disable();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && CurrentAttackState == AttackState.ReleaseAttack)
+        {
+            CurrentMovementState = MovementState.Idle;
+            CurrentAttackState = AttackState.NotAttacking;
+            PlayerAnimator.Play("NotAttacking", 0);
+        }
     }
 
     private void Movement()
@@ -170,11 +178,11 @@ public class Player : MonoBehaviour
             
             moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            playerController.Move(((moveDirection.normalized * speed * swingingSpeedMultiplier) + new Vector3(0, velocityY, 0)) * Time.deltaTime);            
+            PlayerController.Move(((moveDirection.normalized * speed * swingingSpeedMultiplier) + new Vector3(0, velocityY, 0)) * Time.deltaTime);            
         }
         else
         {
-            playerController.Move(new Vector3(0, velocityY, 0) * Time.deltaTime);
+            PlayerController.Move(new Vector3(0, velocityY, 0) * Time.deltaTime);
         }
     }
 
@@ -187,7 +195,7 @@ public class Player : MonoBehaviour
 
             while (Time.time < dashEndTime)
             {
-                playerController.Move(moveDirection * dashSpeed * Time.deltaTime);
+                PlayerController.Move(moveDirection * dashSpeed * Time.deltaTime);
                 yield return null;
             }
 
@@ -212,11 +220,11 @@ public class Player : MonoBehaviour
 
     private void CustomGravity()
     {
-        if (playerController.velocity.y > 0)
+        if (PlayerController.velocity.y > 0)
         {
             velocityY += gravity * jumpGravityScale * Time.deltaTime;
         }
-        else if (playerController.velocity.y < 0)
+        else if (PlayerController.velocity.y < 0)
         {
             velocityY += gravity * fallGravityScale * Time.deltaTime;
         }
@@ -225,6 +233,7 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         velocityY = Mathf.Sqrt(jumpHeight * -2f * (gravity * jumpGravityScale));
+        PlayerAnimator.Play("JumpAttackReady", 0);
     }
 
 
